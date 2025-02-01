@@ -1,147 +1,70 @@
-# React + Vite
+# Getting Started with Create React App
 
-# Proyecto Full Stack - Frontend
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Este repositorio contiene el **frontend** de la aplicación Full Stack, desarrollado en **React** con **React-Bootstrap** y utilizando **Vite** como bundler. El objetivo de este proyecto es demostrar cómo implementar una aplicación con rutas protegidas, autenticación basada en JWT y una interfaz de usuario interactiva y responsiva.
+## Available Scripts
 
-## Tecnologías Utilizadas
+In the project directory, you can run:
 
-* **React** : Librería para la construcción de interfaces de usuario.
-* **React-Bootstrap** : Framework de diseño basado en Bootstrap para componentes UI.
-* **React-Router-Dom** : Librería para manejar la navegación entre páginas en la aplicación de una sola página (SPA).
-* **React Context API** : Para manejar el estado global de la autenticación de usuarios.
-* **React-Icons** : Para integrar iconos en la interfaz de usuario.
-* **Vite** : Bundler de JavaScript moderno, rápido y eficiente.
+### `npm start`
 
-## Estructura del Proyecto
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-src/
-├── components/       # Componentes reutilizables
-│   ├── Sidebar.jsx   # Sidebar de navegación
-│   ├── Header.jsx    # Header de la página
-│   ├── Login.jsx     # Componente de inicio de sesión
-├── context/          # Gestión del estado global
-│   └── AuthContext.jsx # Contexto de autenticación (login/logout)
-├── pages/            # Páginas principales de la aplicación
-│   ├── Dashboard.jsx # Página del Dashboard
-│   ├── Empleados.jsx # Página de empleados
-│   └── Solicitudes.jsx # Página de solicitudes
-├── App.jsx           # Componente principal que contiene las rutas
-└── main.jsx          # Punto de entrada de la aplicación
-`</code></div>``</div></pre>`
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Instalación
+### `npm test`
 
-### Requisitos
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-* **Node.js** (v16 o superior)
-* **npm** o **yarn**
+### `npm run build`
 
-### Pasos de Instalación
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-1. Clona este repositorio:
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-git clone `<url-del-repositorio>`
-cd `<nombre-del-repositorio>`
-`</code></div>``</div></pre>`
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-2. Instala las dependencias:
+### `npm run eject`
 
-npm install
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-# o con yarn
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-yarn install
-`</code></div>``</div></pre>`
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-3. Inicia la aplicación en modo de desarrollo:
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-npm run dev
+## Learn More
 
-o con yarn
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-yarn dev
-`</code></div>``</div></pre>`
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-La aplicación debería estar disponible en `http://localhost:5174`.
+### Code Splitting
 
-## Explicación del Frontend
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### 1. **Estructura Principal del Layout**
+### Analyzing the Bundle Size
 
-El layout de la aplicación está compuesto por un **sidebar** y un  **header** , y contiene las siguientes rutas principales:
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-* **Dashboard** : Página principal de la aplicación.
-* **Empleados** : Página donde se gestionan los empleados.
-* **Solicitudes** : Página donde los administradores gestionan las solicitudes.
+### Making a Progressive Web App
 
-El `Layout.jsx` maneja la estructura global de la página, el cual contiene:
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-* Un **sidebar** con las rutas de navegación, cada una con un icono asociado.
-* Un **header** con el título dinámico de la página y un botón para cerrar sesión.
+### Advanced Configuration
 
-### 2. **Sidebar y Navegación**
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-El **sidebar** se encuentra en el componente `Sidebar.jsx` y tiene las siguientes características:
+### Deployment
 
-* Muestra los elementos de navegación con un ícono al lado del texto.
-* Se usa `React-Router-Dom` para manejar las rutas internas de la aplicación.
-* Cada elemento del sidebar cambia de color y fondo cuando está seleccionado, utilizando la propiedad `location.pathname` de `useLocation`.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-#### Características del Sidebar:
+### `npm run build` fails to minify
 
-* Íconos de navegación usando `React Icons`.
-* Hover para resaltar las opciones al pasar el mouse.
-* Borde redondeado y sombra en cada opción de navegación.
-
-### 3. **Autenticación con JWT**
-
-El sistema de autenticación se maneja a través del contexto `AuthContext`. Los usuarios pueden iniciar sesión con su correo electrónico y contraseña.
-
-* El **Login.jsx** permite a los usuarios ingresar sus credenciales.
-* Al hacer login, se genera un **token JWT** que se almacena en el almacenamiento local (`localStorage`).
-* El **logout** elimina el token y redirige al usuario a la página de inicio de sesión.
-
-El `AuthContext.jsx` proporciona funciones para manejar el estado de autenticación, como `login` y `logout`.
-
-### 4. **Página de Login**
-
-El componente **Login.jsx** permite a los usuarios iniciar sesión. Está compuesto por un formulario que pide el correo electrónico y la contraseña. Los campos son controlados por el estado con `useState`.
-
-El login está integrado con el contexto de autenticación `AuthContext`. El `login()` recibe el correo y la contraseña, y si son correctos, redirige al usuario a la página principal (`/dashboard`).
-
-### 5. **Header**
-
-El **Header** es un componente simple que se encuentra dentro del layout, mostrando el título de la página actual y un botón para cerrar sesión. Utiliza el estado global de la ruta activa (`location.pathname`) para cambiar el título dinámicamente.
-
-* Si el usuario está autenticado, el botón de **Cerrar Sesión** estará visible.
-* Al hacer clic en el botón de cerrar sesión, el estado de autenticación se elimina.
-
-### 6. **Responsividad**
-
-La interfaz de usuario está diseñada para ser  **responsiva** , utilizando las clases de **Bootstrap** y **React-Bootstrap** para adaptarse a diferentes tamaños de pantalla:
-
-* **Sidebar** : Es ocultado en pantallas pequeñas (`d-md-none`).
-* **Botón de menú (hamburguesa)** : En pantallas pequeñas, el botón de menú (hamburguesa) permite alternar la visibilidad del sidebar.
-
-### 7. **Rutas y Navegación Dinámica**
-
-Las rutas se gestionan mediante `React-Router-Dom` y se renderiza el componente correspondiente según la ruta seleccionada. Además, se utiliza un objeto para definir el título de cada página, lo cual se cambia dinámicamente en el  **header** .
-
-### 8. **Componentes Responsivos con React-Bootstrap**
-
-Se utiliza **React-Bootstrap** para la interfaz de usuario, haciendo uso de componentes como `Container`, `Navbar`, `Button`, `Col`, `Row`, `Nav` y `Form`. Esto ayuda a que la UI sea consistente, fácil de usar y accesible.
-
----
-
-## Notas
-
-* **JWT** : La autenticación con JWT se maneja a través de las cabeceras HTTP, y la validación se realiza en el backend.
-* **Paginación y Filtrado** : Para optimizar el rendimiento en el futuro, se implementarán características como la paginación y filtrado en las páginas que muestren grandes cantidades de datos
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
