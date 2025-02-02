@@ -25,7 +25,7 @@ function Employees() {
   const [salario, setSalario] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
-  const [rolId, setRolId] = useState("");
+  const [rolId, setRolId] = useState(1);
 
   const fetchEmployees = async () => {
     const data = await employeeService.getEmployees({
@@ -54,7 +54,7 @@ function Employees() {
       salario: parseFloat(salario),
       correo,
       password,
-      rolId: parseInt(rolId),
+      rolId,
     };
     try {
       const response = await fetch("http://localhost:8080/usuario/create", {
@@ -274,8 +274,8 @@ function Employees() {
                 onChange={(e) => setRolId(e.target.value)}
                 required
               >
-                <option value="1">Empleado</option>
-                <option value="2">Administrador</option>
+                <option value={1}>Empleado</option>
+                <option value={2}>Administrador</option>
               </Form.Control>
             </Form.Group>
 
