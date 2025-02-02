@@ -23,6 +23,14 @@ export default {
           key: "id",
         },
       },
+      empleadoId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "empleados",
+          key: "id",
+        },
+      },
     });
   },
 

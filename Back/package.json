@@ -4,9 +4,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon app",
+    "start": "node app",
     "migrate": "sequelize-cli db:migrate",
-    "migrate:undo": "sequelize-cli db:migrate:undo"
+    "migrate:undo": "sequelize-cli db:migrate:undo",
+    "dev": "nodemon app"
   },
   "keywords": [],
   "author": "",

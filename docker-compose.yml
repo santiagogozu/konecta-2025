@@ -1,6 +1,5 @@
 version: '3.8'
 
-name: prueba-konecta
 services:
   backend:
     build:
@@ -10,7 +9,8 @@ services:
       - 8080:8080
     tty: true
     depends_on:
-      - database
+      database:
+        condition: service_healthy
 
   database:
     image: postgres:17
@@ -22,13 +22,13 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_USER: postgres
       POSTGRES_DB: pruebaKonecta
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
-      interval: 30s
-      timeout: 60s
-      retries: 5
-      start_period: 80s
     tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d pruebaKonecta"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   frontend:
     build:
