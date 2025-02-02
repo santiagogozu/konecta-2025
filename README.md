@@ -194,6 +194,21 @@ El usuario con rol de Empleado tiene permisos más limitados:
     Gestión de solicitudes: Puede visualizar la lista de solicitudes y crear nuevas solicitudes.
     No tiene acceso a la gestión de empleados.
 
+# Pruebas Unitarias
+
+Para ejecutar las pruebas unitarias del proyecto, usa el siguiente comando en la terminal:
+
+    Backend:
+    cd Back
+    npm run test
+
+    Frontend:
+    cd Front
+    npm run test
+
+Este comando ejecutará los test definidos en el proyecto y mostrará los resultados en la terminal. Asegúrate de tener todas las dependencias instaladas antes de ejecutar las pruebas.
+
+
 # Mejores Prácticas y Seguridad en el Código BackEnd
 
 ## BackEnd
