@@ -2,7 +2,7 @@ export default {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("empleados", [
       {
-        id: 1,
+        id: 0,
         fecha_ingreso: "2025-01-01",
         nombre: "admin",
         salario: 100,

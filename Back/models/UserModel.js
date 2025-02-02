@@ -43,7 +43,6 @@ const UserModel = db.define(
   }
 );
 
-// Definir relaciones
 UserModel.belongsTo(RolModel, {foreignKey: "rolId"});
 UserModel.belongsTo(EmployeesModel, {foreignKey: "empleadoId"});
 

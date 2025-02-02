@@ -9,7 +9,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import {AuthContext} from "../context/AuthContext";
-import {FaEnvelope, FaLock} from "react-icons/fa"; // Iconos
+import {FaEnvelope, FaLock} from "react-icons/fa";
 
 function Login() {
   const {login} = useContext(AuthContext);

@@ -3,29 +3,25 @@ import {useNavigate} from "react-router-dom";
 
 export const AuthContext = createContext();
 
-// eslint-disable-next-line react/prop-types
 export function AuthProvider({children}) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const decodeToken = (token) => {
     try {
-      // Separamos el token en sus tres partes (header, payload, signature)
       const payload = token.split(".")[1];
 
-      // Decodificamos la parte payload del token de base64
       const decodedPayload = JSON.parse(atob(payload));
 
       console.log("decodedPayload", decodedPayload);
 
-      return decodedPayload; // Retornamos el payload decodificado
+      return decodedPayload;
     } catch (error) {
       console.error("Error al decodificar el token", error);
       return null;
     }
   };
 
-  // Verifica si hay un token en localStorage al cargar la app
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -33,12 +29,11 @@ export function AuthProvider({children}) {
       if (decodedUser) {
         setUser(decodedUser);
       } else {
-        logout(); // Si hay error al decodificar, cerramos sesión
+        logout();
       }
     }
   }, []);
 
-  // Función de login
   const login = async (email, password) => {
     try {
       const response = await fetch("http://localhost:8080/usuario/login", {
@@ -49,7 +44,7 @@ export function AuthProvider({children}) {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("token", data.token); // Guardamos el JWT
+        localStorage.setItem("token", data.token);
         const decodedUser = decodeToken(data.token);
         setUser(decodedUser);
         navigate("/dashboard");
@@ -61,11 +56,10 @@ export function AuthProvider({children}) {
     }
   };
 
-  // Función de logout
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    window.location.href = "/"; // Forzar redirección
+    window.location.href = "/";
   };
 
   return (

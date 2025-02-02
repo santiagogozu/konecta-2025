@@ -10,15 +10,25 @@ export const create = async (req, res) => {
   }
 };
 
-export const list = async (_req, res) => {
+export const list = async (req, res) => {
   try {
-    const requestsList = await requestsService.getAll();
-    res.json({data: requestsList});
+    const {page = 1, limit = 10, search = ""} = req.query;
+
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+
+    const requestsList = await requestsService.getAll(
+      search,
+      pageNumber,
+      limitNumber
+    );
+
+    res.json(requestsList);
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({error: "Ocurrio un error al consultar las solicitudes"});
+      .json({error: "Ocurrió un error al consultar las solicitudes"});
   }
 };
 

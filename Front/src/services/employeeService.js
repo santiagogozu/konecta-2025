@@ -3,10 +3,6 @@ const API_URL = "http://localhost:8080/empleados";
 const employeeService = {
   getEmployees: async (page = 1, limit = 5, search = "") => {
     try {
-      console.log("page", page);
-      console.log("limit", limit);
-      console.log("search", search);
-
       const response = await fetch(
         `${API_URL}?page=${page.page}&limit=${
           page.limit
