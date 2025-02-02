@@ -1,8 +1,20 @@
 import {useEffect, useState, useContext} from "react";
-import {Container, Table, Button, Modal, Form} from "react-bootstrap";
+import {
+  Container,
+  Table,
+  Button,
+  Modal,
+  Form,
+  Pagination,
+} from "react-bootstrap";
 import {AuthContext} from "../context/AuthContext";
 import Swal from "sweetalert2";
-import {FaTrashAlt, FaPlusCircle} from "react-icons/fa"; // Íconos
+import {FaTrashAlt, FaPlusCircle} from "react-icons/fa";
+import {
+  fetchRequests,
+  deleteRequest,
+  createRequest,
+} from "../services/requestService"; // Importamos los servicios
 
 function Requests() {
   const [requests, setRequests] = useState([]);
@@ -11,63 +23,50 @@ function Requests() {
   const [codigo, setCodigo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [resumen, setResumen] = useState("");
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const pageSize = 5;
+
+  const fetchAllRequests = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const data = await fetchRequests({
+        page: currentPage,
+        limit: pageSize,
+        search,
+        token,
+      });
+      console.log("Data ", data);
+      setRequests(data.requests);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error("Error fetching requests:", error);
+      Swal.fire("Error", "Hubo un problema al cargar las solicitudes", "error");
+    }
+  };
 
   useEffect(() => {
-    fetch("http://localhost:8080/solicitudes", {
-      headers: {Authorization: `Bearer ${localStorage.getItem("token")}`},
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setRequests(data.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener solicitudes:", error);
-        setRequests([]);
-      });
-  }, []);
+    fetchAllRequests();
+  }, [currentPage, search]);
 
-  const deleteRequest = (requestId) => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción no se puede deshacer",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`http://localhost:8080/solicitudes/${requestId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
-          .then((res) => {
-            if (res.ok) {
-              setRequests(
-                requests.filter((request) => request.id !== requestId)
-              );
-              Swal.fire(
-                "Eliminado",
-                "La solicitud ha sido eliminada.",
-                "success"
-              );
-            } else {
-              Swal.fire("Error", "No se pudo eliminar la solicitud.", "error");
-            }
-          })
-          .catch((error) => {
-            console.error("Error al eliminar la solicitud:", error);
-            Swal.fire(
-              "Error",
-              "Hubo un problema al eliminar la solicitud.",
-              "error"
-            );
-          });
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleDeleteRequest = async (requestId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const isDeleted = await deleteRequest(requestId, token);
+      if (isDeleted) {
+        fetchAllRequests();
+        Swal.fire("Eliminado", "La solicitud ha sido eliminada.", "success");
       }
-    });
+    } catch (error) {
+      console.error("Error deleting request:", error);
+      Swal.fire("Error", "No se pudo eliminar la solicitud", "error");
+    }
   };
 
   const handleCreateRequest = async (e) => {
@@ -76,28 +75,18 @@ function Requests() {
     const newRequest = {codigo, descripcion, resumen, empleadoId};
 
     try {
-      const response = await fetch("http://localhost:8080/solicitudes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(newRequest),
-      });
-
-      if (response.ok) {
+      const token = localStorage.getItem("token");
+      const isCreated = await createRequest(newRequest, token);
+      if (isCreated) {
         Swal.fire("Éxito", "Solicitud creada correctamente", "success");
         setShowModal(false);
         setCodigo("");
         setDescripcion("");
         setResumen("");
-        const updatedRequests = await response.json();
-        setRequests([...requests, updatedRequests.data]);
-      } else {
-        Swal.fire("Error", "No se pudo crear la solicitud", "error");
+        fetchAllRequests();
       }
     } catch (error) {
-      console.error("Error al crear la solicitud:", error);
+      console.error("Error creating request:", error);
       Swal.fire("Error", "Hubo un problema al crear la solicitud", "error");
     }
   };
@@ -105,6 +94,13 @@ function Requests() {
   return (
     <Container className="mt-5">
       <h2 className="text-center text-primary mb-4">Solicitudes</h2>
+      <Form.Control
+        type="text"
+        placeholder="Buscar por código..."
+        value={search}
+        onChange={handleSearchChange}
+        className="mb-3"
+      />
       <Button
         variant="primary"
         className="mb-3 d-flex align-items-center"
@@ -136,7 +132,7 @@ function Requests() {
                   <td>
                     <Button
                       variant="danger"
-                      onClick={() => deleteRequest(request.id)}
+                      onClick={() => handleDeleteRequest(request.id)}
                       className="d-flex align-items-center"
                     >
                       <FaTrashAlt className="me-2" />
@@ -158,6 +154,18 @@ function Requests() {
           )}
         </tbody>
       </Table>
+
+      <Pagination>
+        {[...Array(totalPages).keys()].map((num) => (
+          <Pagination.Item
+            key={num + 1}
+            active={num + 1 === currentPage}
+            onClick={() => setCurrentPage(num + 1)}
+          >
+            {num + 1}
+          </Pagination.Item>
+        ))}
+      </Pagination>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>

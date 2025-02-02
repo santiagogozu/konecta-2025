@@ -9,8 +9,6 @@ function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const {user, logout} = useContext(AuthContext);
 
-  // Definición de rutas y íconos
-
   const menuItems =
     user?.rol === "Administrador"
       ? [
@@ -23,7 +21,6 @@ function Layout() {
           {path: "/requests", title: "Solicitudes", icon: <FaClipboardList />},
         ];
 
-  // Títulos dinámicos según la ruta
   const pageTitles = {
     "/dashboard": "Dashboard",
     "/employees": "Empleados",
@@ -32,7 +29,6 @@ function Layout() {
 
   return (
     <Container fluid className="vh-100 d-flex p-0">
-      {/* Sidebar */}
       <Col
         md={3}
         lg={2}
@@ -62,9 +58,7 @@ function Layout() {
         </Nav>
       </Col>
 
-      {/* Contenido Principal */}
       <Col className="d-flex flex-column p-0">
-        {/* Header */}
         <Navbar bg="light" className="px-4 shadow-sm d-flex align-items-center">
           <Button
             variant="outline-dark"
@@ -80,8 +74,6 @@ function Layout() {
             Cerrar Sesión
           </Button>
         </Navbar>
-
-        {/* Contenido de la Página */}
         <Container fluid className="p-4">
           <Outlet />
         </Container>

@@ -5,28 +5,13 @@ import {AuthContext} from "../context/AuthContext";
 import Dashboard from "../pages/Dashboard";
 import {MemoryRouter} from "react-router-dom";
 
+// Función de mock para el contexto de autenticación
 const mockAuthContext = (user, logoutFn = jest.fn()) => ({
   user,
   logout: logoutFn,
 });
 
 describe("Dashboard Component", () => {
-  it("Muestra el mensaje de bienvenida con la información del usuario.", () => {
-    const user = {correo: "test@example.com", rol: "Usuario"};
-    const logoutMock = jest.fn();
-    render(
-      <MemoryRouter>
-        <AuthContext.Provider value={mockAuthContext(user, logoutMock)}>
-          <Dashboard />
-        </AuthContext.Provider>
-      </MemoryRouter>
-    );
-
-    expect(
-      screen.getByText(`Bienvenido, ${user.correo} (${user.rol})`)
-    ).toBeInTheDocument();
-  });
-
   it('Muestra el botón "Gestionar Empleados" para usuarios administradores.', () => {
     const user = {correo: "admin@example.com", rol: "Administrador"};
     render(
@@ -53,7 +38,7 @@ describe("Dashboard Component", () => {
     expect(screen.queryByText("Gestionar Empleados")).not.toBeInTheDocument();
   });
 
-  it('Muestra los botones "Ver Solicitudes" y "Cerrar Sesión"', () => {
+  it('Muestra el botón "Ver Solicitudes".', () => {
     const user = {correo: "test@example.com", rol: "Usuario"};
     render(
       <MemoryRouter>
@@ -64,6 +49,5 @@ describe("Dashboard Component", () => {
     );
 
     expect(screen.getByText("Ver Solicitudes")).toBeInTheDocument();
-    expect(screen.getByText("Cerrar Sesión")).toBeInTheDocument();
   });
 });

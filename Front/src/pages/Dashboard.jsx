@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {Container, Button, Row, Col} from "react-bootstrap";
 import {AuthContext} from "../context/AuthContext";
 import {useNavigate} from "react-router-dom";
-import {FaUsers, FaClipboardList, FaSignOutAlt} from "react-icons/fa"; // Iconos
+import {FaUsers, FaClipboardList, FaSignOutAlt} from "react-icons/fa";
 
 function Dashboard() {
   const {user, logout} = useContext(AuthContext);
@@ -54,20 +54,6 @@ function Dashboard() {
           >
             <FaClipboardList className="me-2" style={{fontSize: "1.5rem"}} />
             Ver Solicitudes
-          </Button>
-          <Button
-            variant="danger"
-            className="mb-3 ms-3"
-            onClick={logout}
-            style={{
-              width: "300px",
-              height: "80px",
-              fontSize: "1.2rem",
-              padding: "20px",
-            }}
-          >
-            <FaSignOutAlt className="me-2" style={{fontSize: "1.5rem"}} />
-            Cerrar Sesión
           </Button>
         </Col>
       </Row>

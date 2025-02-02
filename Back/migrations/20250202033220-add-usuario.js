@@ -7,7 +7,7 @@ export default {
         password:
           "$2a$10$2kyo9kaog7X.ZCXagAAao.afv0jOZ1lmNojdmQyL1sTcVwogOvjqm",
         rolId: 2,
-        empleadoId: 1,
+        empleadoId: 0,
       },
     ]);
   },

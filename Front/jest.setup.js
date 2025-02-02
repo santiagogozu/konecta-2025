@@ -1,4 +1,4 @@
-import {TextEncoder, TextDecoder} from "util"; // Importa el polyfill
+import {TextEncoder, TextDecoder} from "util";
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
